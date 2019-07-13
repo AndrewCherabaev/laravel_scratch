@@ -25,3 +25,9 @@ Options:
   * Eloquent Filter       : Filter models and relationships
   * Eloquent Sortable     : Sortable behaviour models
   * Lighthouse            : GraphQL library for Laravel
+
+## Todo
+* Add `scratch.json` for easy packages list modifying
+* Remove some flags
+* Add some another awesome packages
+* Add links to packages repositories and Laravel Awesome list
