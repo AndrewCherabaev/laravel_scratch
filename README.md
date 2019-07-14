@@ -36,9 +36,9 @@ Options:
 
 ## About `scratch.json`
 
-```json
+```js
 {
-  //Name of package, ie 
+  //Name of package
   "name": "Lighthouse",
   //Description text for help message
   "description": "GraphQL library for Laravel",

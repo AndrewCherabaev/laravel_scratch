@@ -49,22 +49,7 @@ function status($pid)
 
 function show_progress($index = 0)
 {
-    return  [
-        ' [=.......] ',
-        ' [.=......] ',
-        ' [..=.....] ',
-        ' [...=....] ',
-        ' [....=...] ',
-        ' [.....=..] ',
-        ' [......=.] ',
-        ' [.......=] ',
-        ' [......=.] ',
-        ' [.....=..] ',
-        ' [....=...] ',
-        ' [...=....] ',
-        ' [..=.....] ',
-        ' [.=......] ',
-    ][$index];
+    return  ['[=...]','[.=..]','[..=.]','[...=]','[..=.]','[.=..]'][$index];
 }
 
 function run_command($command)
@@ -73,9 +58,9 @@ function run_command($command)
     exec("{$command} >> /dev/null 2>&1 & echo $!", $pid);
     echo show_progress();
     while (status($pid[0])) {
-        echo "\033[12D" . show_progress($state++ % 13);
+        echo "\033[6D" . show_progress($state++ % 6);
     }
-    echo "\033[12D   \33[1;32mDone ✓  \33[1;37m\n";
+    echo "\033[6D\33[1;32mDone ✓\33[1;37m\n";
 }
 
 function execute($command, $is_test=false)
