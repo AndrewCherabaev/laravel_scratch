@@ -13,11 +13,19 @@ Options:
   --name=project  Required. Name of new project
         
   --pure          Do not install additional packages
+  --no-laravel    Do not create project, just add packages
+
+  --test          Do nothing but you can see result imidiately
 ```
+
+**Important!** For *nix only! If you use Windows, you can run it inside Vagrant
+
 ## Packages to be installed:
+  * [Doctrine DBAL](https://github.com/doctrine/dbal) - Powerful database abstraction layer. Uses in `ALTER COLUMN` migrations 
   * [IDE Helper](https://github.com/barryvdh/laravel-ide-helper) - Generates a helper file for IDE auto-completion
   * [Debug Bar](https://github.com/barryvdh/laravel-debugbar) - Integrates PHP Debug Bar with Laravel
   * [Laravel 5 Extended Generators](https://github.com/laracasts/Laravel-5-Generators-Extended) - Extends built-in file generators
+  * [Laravel Activitylog](https://github.com/spatie/laravel-activitylog) - Log activity inside your Laravel app
   * [Eloquent Sluggable](https://github.com/cviebrock/eloquent-sluggable) - Create slugs for Eloquent models
   * [Eloquent Filter](https://github.com/Tucker-Eric/EloquentFilter) - Filter models and their Relationships
   * [Eloquent Sortable](https://github.com/spatie/eloquent-sortable) - Sortable behaviour for Eloquent models
@@ -30,19 +38,24 @@ Options:
 
 ```json
 {
-  "name": Name of package, ie "Lighthouse",
-  "description": Description text for help message,
-  "composer": Name of composer repo "nuwave/lighthouse",
-  "artisan": [ 
-      List of specific artisan connads to be run
-      "vendor:publish --provider=\"Nuwave\\Lighthouse\\LighthouseServiceProvider\" --tag=schema",
-      "vendor:publish --provider=\"Nuwave\\Lighthouse\\LighthouseServiceProvider\" --tag=config"
-  ]
+  //Name of package, ie 
+  "name": "Lighthouse",
+  //Description text for help message
+  "description": "GraphQL library for Laravel",
+  // Name of composer repo 
+  "composer": "nuwave/lighthouse",
+  //List of specific commands to be run
+  "commands": [ 
+      "php artisan vendor:publish --provider=\"Nuwave\\Lighthouse\\LighthouseServiceProvider\" --tag=schema",
+      "php artisan vendor:publish --provider=\"Nuwave\\Lighthouse\\LighthouseServiceProvider\" --tag=config"
+  ],
+  //Set to true if you need not to install this package
+  "ignore": false 
 }
 ```
 
 ## Todo
-* ~~Add `scratch.json` for easy packages list modifying~~
-* ~~Remove some flags~~
 * Add some another awesome packages
-* Add links to ~~packages repositories and Laravel Awesome list~~
+* ~~Remove some flags~~
+* ~~Add `scratch.json` for easy packages list modifying~~
+* ~~Add links to packages repositories and Laravel Awesome list~~

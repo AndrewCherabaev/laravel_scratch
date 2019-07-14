@@ -1,66 +1,92 @@
 {
     "packages": [
         {
+            "name": "Doctrine DBAL",
+            "description": "Database schema management",
+            "composer": "doctrine/dbal",
+            "commands": [],
+            "ignore": false
+        },
+        {
             "name": "IDE Helper",
             "description": "Generates a helper file for IDE",
             "composer": "barryvdh/laravel-ide-helper --dev",
-            "artisan": [
-                "vendor:publish --provider=\"Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider\" --tag=config",
-                "ide-helper:generate"
-            ]
+            "commands": [
+                "php artisan vendor:publish --provider=\"Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider\" --tag=config",
+                "php artisan ide-helper:generate",
+                "echo _ide_helper.php >> .gitignore"
+            ],
+            "ignore": false
         },
         {
             "name": "Debug Bar",
             "description": "Integrates PHP Debug Bar",
             "composer": "barryvdh/laravel-debugbar --dev",
-            "artisan": [
-                "vendor:publish --provider=\"Barryvdh\\Debugbar\\ServiceProvider\""
-            ]
+            "commands": [
+                "php artisan vendor:publish --provider=\"Barryvdh\\Debugbar\\ServiceProvider\""
+            ],
+            "ignore": false
         },
         {
             "name": "Extended Generators",
             "description": "Extends built-in generators",
             "composer": "laracasts/generators --dev",
-            "artisan": []
+            "commands": [],
+            "ignore": false
+        },
+        {
+            "name": "Activitylog",
+            "description": "Log activity inside your Laravel app",
+            "composer": "spatie/laravel-activitylog",
+            "commands": [
+                "php artisan vendor:publish --provider=\"Spatie\\Activitylog\\ActivitylogServiceProvider\" --tag=\"config\"",
+                "php artisan vendor:publish --provider=\"Spatie\\Activitylog\\ActivitylogServiceProvider\" --tag=\"migrations\""
+            ],
+            "ignore": false
         },
         {
             "name": "Eloquent Sluggable",
             "description": "Slugs for models",
             "composer": "cviebrock/eloquent-sluggable",
-            "artisan": [
-                "vendor:publish --provider=\"Cviebrock\\EloquentSluggable\\ServiceProvider\""
-            ]
+            "commands": [
+                "php artisan vendor:publish --provider=\"Cviebrock\\EloquentSluggable\\ServiceProvider\""
+            ],
+            "ignore": false
         },
         {
             "name": "Eloquent Filter",
             "description": "Filter models and relationships",
             "composer": "tucker-eric/eloquentfilter",
-            "artisan": [
-                "vendor:publish --provider=\"EloquentFilter\\ServiceProvider\""
-            ]
+            "commands": [
+                "php artisan vendor:publish --provider=\"EloquentFilter\\ServiceProvider\""
+            ],
+            "ignore": false
         },
         {
             "name": "Eloquent Sortable",
             "description": "Sortable behaviour models",
             "composer": "spatie/eloquent-sortable",
-            "artisan": []
+            "commands": [],
+            "ignore": false
         },
         {
-            "name": "Laravel Breadcrumbs",
+            "name": "Breadcrumbs",
             "description": "Create and manage breadcrumbs",
             "composer": "davejamesmiller/laravel-breadcrumbs",
-            "artisan": [
-                "vendor:publish --provider=\"DaveJamesMiller\\Breadcrumbs\\BreadcrumbsServiceProvider\""
-            ]
+            "commands": [
+                "php artisan vendor:publish --provider=\"DaveJamesMiller\\Breadcrumbs\\BreadcrumbsServiceProvider\""
+            ],
+            "ignore": false
         },
         {
             "name": "Lighthouse",
             "description": "GraphQL library for Laravel",
             "composer": "nuwave/lighthouse",
-            "artisan": [
-                "vendor:publish --provider=\"Nuwave\\Lighthouse\\LighthouseServiceProvider\" --tag=schema",
-                "vendor:publish --provider=\"Nuwave\\Lighthouse\\LighthouseServiceProvider\" --tag=config"
-            ]
+            "commands": [
+                "php artisan vendor:publish --provider=\"Nuwave\\Lighthouse\\LighthouseServiceProvider\" --tag=schema",
+                "php artisan vendor:publish --provider=\"Nuwave\\Lighthouse\\LighthouseServiceProvider\" --tag=config"
+            ],
+            "ignore": false
         }
     ]
 }

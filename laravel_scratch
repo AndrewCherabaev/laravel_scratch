@@ -2,25 +2,54 @@
 <?php
 
 $flags = getopt('h', [
-    'pure',                     // install no Laravel only
-    // 'no-dev',                   // install no Dev Helpers
-    // 'no-graphql',               // install no Lighthouse
-    // 'no-helpers',               // install no Eloquent Helpers
+    'pure',                     // install Laravel only
+    'no-laravel',               // install all to existing project
+    'test',
     'name:'
 ]);
 
-function status($pid)
-{
-    exec('ps -p ' . $pid, $state);
-    return isset($state[1]);
+$packages = json_decode(file_get_contents('scratch.json'), true)['packages'];
+$pad_right = max(array_map('strlen', array_column($packages, 'name')));
+
+if (empty($flags) || array_key_exists('h', $flags) || array_key_exists('help', $flags)) {
+    echo "\33[1;37m
+    Laravel 5 scratch installer v1.0
+
+    \33[1;32mOptions:\33[1;37m
+           -h, --help      Show this help message
+           --name=project  \33[1;33mRequired\33[1;37m Name of new project
+        
+           --pure          Do not install additional packages
+           --no-laravel    Do not create project, just add packages
+
+    \33[1;32mPackages to be installed:\33[1;37m\n";
+    foreach ($packages as $package) {
+        $name = str_pad($package['name'], $pad_right+2, ' ', STR_PAD_RIGHT);
+        if ($package['ignore'] ?? false) {
+            echo "\33[0;37m [ignored] \33[1;30m";
+        } else {
+            echo "           ";
+        }
+        echo "{$name} {$package['description']}\33[1;37m\n";
+    }
+    echo "\033[0m\n";
+    exit;
 }
 
-function show_progress($index)
+if (!array_key_exists('name', $flags)) {
+    echo "\33[1;33mNo project name specified!\033[0m\n";
+    exit;
+}
+
+function status($pid)
 {
-    if (-1 == $index) {
-        return ' [========] ';
-    }
-    $progress = [
+    exec("ps -p $pid", $state);
+    return $state[1] ?? false;
+}
+
+function show_progress($index = 0)
+{
+    return  [
         ' [=.......] ',
         ' [.=......] ',
         ' [..=.....] ',
@@ -35,67 +64,62 @@ function show_progress($index)
         ' [...=....] ',
         ' [..=.....] ',
         ' [.=......] ',
-    ];
-    return $progress[$index];
+    ][$index];
 }
 
 function run_command($command)
 {
     $state = 0;
     exec("{$command} >> /dev/null 2>&1 & echo $!", $pid);
-    echo show_progress($state);
-    do {
-        echo "\033[12D" . show_progress(++$state % 13);
-    } while (status($pid[0]));
-    echo "\033[12D" . show_progress(-1);
-    echo "\33[1;32mDone ✓\33[1;37m\n";
-}
-
-$packages = json_decode(file_get_contents('scratch.json'), true)['packages'];
-$pad_right = max(array_map('strlen', array_column($packages, 'name'))) + 2;
-// var_dump($packages, $pad_right);exit;
-
-if (empty($flags) || array_key_exists('h', $flags) || array_key_exists('help', $flags)) {
-    echo "\33[1;37m
-    Laravel 5 scratch installer v1.0
-
-    \33[1;32mOptions:\33[1;37m
-        -h, --help      Shows this help message
-        --name=project  \33[1;33mRequired\33[1;37m Name of new project
-        
-        --pure          Do not install additional packages
-
-    Packages to be installed:\n";
-    foreach ($packages as $package) {
-        $name = str_pad($package['name'], $pad_right+2, ' ', STR_PAD_RIGHT);
-        echo "        {$name} {$package['description']}\n";
+    echo show_progress();
+    while (status($pid[0])) {
+        echo "\033[12D" . show_progress($state++ % 13);
     }
-    exit;
+    echo "\033[12D   \33[1;32mDone ✓  \33[1;37m\n";
 }
 
-if (!array_key_exists('name', $flags)) {
-    echo "no project name specified!\n";
-    exit(1);
+function execute($command, $is_test=false)
+{
+    $is_test ? run_command('ls') : run_command($command);
 }
 
-$project_name = $flags['name'];
-echo "\33[1;32mCreating new Laravel 5 project '{$project_name}'...\33[1;37m\n\n";
-echo "Install " . str_pad("Laravel:", $pad_right, ' ', STR_PAD_RIGHT);
-run_command("composer create-project --prefer-dist laravel/laravel {$project_name}");
+$name = $flags['name'];
+$is_test = array_key_exists('test', $flags);
+
+$start = microtime(1);
+
+echo "\33[1;32mCreating new Laravel 5 project '{$name}'...\33[1;37m\n\n";
+
+if (!array_key_exists('no-laravel', $flags)) {
+    echo "Install " . str_pad("Laravel:", $pad_right+2, ' ', STR_PAD_RIGHT);
+    execute("composer create-project --prefer-dist laravel/laravel {$name}", $is_test);
+    echo str_pad(" + config (1/1):", $pad_right+10, ' ', STR_PAD_RIGHT);
+    execute("cd {$name} && echo composer.lock >> .gitignore", $is_test);
+}
 
 if (!array_key_exists('pure', $flags) && count($packages)) {
 
     foreach ($packages as $package) {
-        echo "Install " . str_pad($package['name'] . ':', $pad_right, ' ', STR_PAD_RIGHT);
-        run_command("cd {$project_name} && composer require {$package['composer']}");
-        if (array_key_exists('artisan', $package)) {
+        if ($package['ignore'] ?? false) {
+            continue;
+        }
+        echo "Install " . str_pad($package['name'] . ':', $pad_right+2, ' ', STR_PAD_RIGHT);
+        execute("cd {$name} && composer require {$package['composer']}", $is_test);
+        if (array_key_exists('commands', $package)) {
             $pad_left = strlen("Install " . $package['name']);
-            foreach ($package['artisan'] as $config) {
-                $strl_left = str_pad("+config", $pad_left, ' ', STR_PAD_LEFT);
-                echo str_pad($strl_left, $pad_right+8, ' ', STR_PAD_RIGHT);
-                run_command("cd {$project_name} && php artisan {$config}");
+            foreach ($package['commands'] as $index => $config) {
+                $i = $index +1;
+                $all = count($package['commands']);
+                echo str_pad(" + config ({$i}/{$all}):", $pad_right+10, ' ', STR_PAD_RIGHT);
+                
+                execute("cd {$name} && {$config}", $is_test);
             }
         }
     }
 }
-echo "\n\33[1;32mLaravel 5 project '{$project_name}' successfully created!\033[0m\n";
+
+$time = microtime(1) - $start;
+$min = number_format($time/60, 0);
+$sec = number_format($time%60, 0);
+
+echo "\n\33[1;32mLaravel 5 project '{$name}' successfully created\33[1;37m in {$min}:{$sec} min \033[0m\n";
