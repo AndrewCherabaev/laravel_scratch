@@ -1,0 +1,66 @@
+{
+    "packages": [
+        {
+            "name": "IDE Helper",
+            "description": "Generates a helper file for IDE",
+            "composer": "barryvdh/laravel-ide-helper --dev",
+            "artisan": [
+                "vendor:publish --provider=\"Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider\" --tag=config",
+                "ide-helper:generate"
+            ]
+        },
+        {
+            "name": "Debug Bar",
+            "description": "Integrates PHP Debug Bar",
+            "composer": "barryvdh/laravel-debugbar --dev",
+            "artisan": [
+                "vendor:publish --provider=\"Barryvdh\\Debugbar\\ServiceProvider\""
+            ]
+        },
+        {
+            "name": "Extended Generators",
+            "description": "Extends built-in generators",
+            "composer": "laracasts/generators --dev",
+            "artisan": []
+        },
+        {
+            "name": "Eloquent Sluggable",
+            "description": "Slugs for models",
+            "composer": "cviebrock/eloquent-sluggable",
+            "artisan": [
+                "vendor:publish --provider=\"Cviebrock\\EloquentSluggable\\ServiceProvider\""
+            ]
+        },
+        {
+            "name": "Eloquent Filter",
+            "description": "Filter models and relationships",
+            "composer": "tucker-eric/eloquentfilter",
+            "artisan": [
+                "vendor:publish --provider=\"EloquentFilter\\ServiceProvider\""
+            ]
+        },
+        {
+            "name": "Eloquent Sortable",
+            "description": "Sortable behaviour models",
+            "composer": "spatie/eloquent-sortable",
+            "artisan": []
+        },
+        {
+            "name": "Laravel Breadcrumbs",
+            "description": "Create and manage breadcrumbs",
+            "composer": "davejamesmiller/laravel-breadcrumbs",
+            "artisan": [
+                "vendor:publish --provider=\"DaveJamesMiller\\Breadcrumbs\\BreadcrumbsServiceProvider\""
+            ]
+        },
+        {
+            "name": "Lighthouse",
+            "description": "GraphQL library for Laravel",
+            "composer": "nuwave/lighthouse",
+            "artisan": [
+                "vendor:publish --provider=\"Nuwave\\Lighthouse\\LighthouseServiceProvider\" --tag=schema",
+                "vendor:publish --provider=\"Nuwave\\Lighthouse\\LighthouseServiceProvider\" --tag=config"
+            ]
+        }
+    ]
+}

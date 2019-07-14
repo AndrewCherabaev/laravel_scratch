@@ -3,9 +3,9 @@
 
 $flags = getopt('h', [
     'pure',                     // install no Laravel only
-    'no-dev',                   // install no Dev Helpers
-    'no-graphql',               // install no Lighthouse
-    'no-helpers',               // install no Eloquent Helpers
+    // 'no-dev',                   // install no Dev Helpers
+    // 'no-graphql',               // install no Lighthouse
+    // 'no-helpers',               // install no Eloquent Helpers
     'name:'
 ]);
 
@@ -51,6 +51,10 @@ function run_command($command)
     echo "\33[1;32mDone ✓\33[1;37m\n";
 }
 
+$packages = json_decode(file_get_contents('scratch.json'), true)['packages'];
+$pad_right = max(array_map('strlen', array_column($packages, 'name'))) + 2;
+// var_dump($packages, $pad_right);exit;
+
 if (empty($flags) || array_key_exists('h', $flags) || array_key_exists('help', $flags)) {
     echo "\33[1;37m
     Laravel 5 scratch installer v1.0
@@ -59,27 +63,13 @@ if (empty($flags) || array_key_exists('h', $flags) || array_key_exists('help', $
         -h, --help      Shows this help message
         --name=project  \33[1;33mRequired\33[1;37m Name of new project
         
-        --pure          Do not install additional packages (see below)
-        --no-dev        Do not install [Dev Helpers]
-        --no-helpers    Do not install [Eloquent Helpers]
-        --no-graphql    Do not install [GraphQL integration]
+        --pure          Do not install additional packages
 
-
-    Packages to be installed:
-
-    \33[1;32m[Dev Helpers]:\33[1;37m
-        IDE Helper            Generates a helper file for IDE
-        Debug Bar             Integrates PHP Debug Bar
-        Extended Generators   Extends built-in generators
-
-    \33[1;32m[Eloquent Helpers]:\33[1;37m
-        Eloquent Sluggable    Slugs for models
-        Eloquent Filter       Filter models and relationships
-        Eloquent Sortable     Sortable behaviour models
-
-    \33[1;32m[GraphQL integration]:\33[1;37m
-        Lighthouse            GraphQL library for Laravel
-        \033[0m\n";
+    Packages to be installed:\n";
+    foreach ($packages as $package) {
+        $name = str_pad($package['name'], $pad_right+2, ' ', STR_PAD_RIGHT);
+        echo "        {$name} {$package['description']}\n";
+    }
     exit;
 }
 
@@ -90,37 +80,22 @@ if (!array_key_exists('name', $flags)) {
 
 $project_name = $flags['name'];
 echo "\33[1;32mCreating new Laravel 5 project '{$project_name}'...\33[1;37m\n\n";
-echo "Install Laravel:            ";
+echo "Install " . str_pad("Laravel:", $pad_right, ' ', STR_PAD_RIGHT);
 run_command("composer create-project --prefer-dist laravel/laravel {$project_name}");
 
-if (!array_key_exists('pure', $flags)) {
+if (!array_key_exists('pure', $flags) && count($packages)) {
 
-    if (!array_key_exists('no-dev', $flags)) {
-        echo "\nInstall IDE Helper:         ";
-        run_command("cd {$project_name} && composer require barryvdh/laravel-ide-helper --dev");
-        echo "Install Debug Bar:          ";
-        run_command("cd {$project_name} && composer require barryvdh/laravel-debugbar --dev");
-        echo "Install Generators:         ";
-        run_command("cd {$project_name} && composer require laracasts/generators --dev");
+    foreach ($packages as $package) {
+        echo "Install " . str_pad($package['name'] . ':', $pad_right, ' ', STR_PAD_RIGHT);
+        run_command("cd {$project_name} && composer require {$package['composer']}");
+        if (array_key_exists('artisan', $package)) {
+            $pad_left = strlen("Install " . $package['name']);
+            foreach ($package['artisan'] as $config) {
+                $strl_left = str_pad("+config", $pad_left, ' ', STR_PAD_LEFT);
+                echo str_pad($strl_left, $pad_right+8, ' ', STR_PAD_RIGHT);
+                run_command("cd {$project_name} && php artisan {$config}");
+            }
+        }
     }
-
-    if (!array_key_exists('no-helpers', $flags)) {
-        echo "\nInstall Eloquent Sluggable: ";
-        run_command("cd {$project_name} && composer require cviebrock/eloquent-sluggable");
-        echo "Install Eloquent Filter:    ";
-        run_command("cd {$project_name} && composer require tucker-eric/eloquentfilter");
-        echo "Install Eloquent Sortable:  ";
-        run_command("cd {$project_name} && composer require spatie/eloquent-sortable");
-    }
-
-    if (!array_key_exists('no-graphql', $flags)) {
-        echo "\nInstall Lighthouse:         ";
-        run_command("cd {$project_name} && composer require nuwave/lighthouse");
-        echo "  +creating schema:         ";
-        run_command("cd {$project_name} && php artisan vendor:publish --provider=\"Nuwave\Lighthouse\LighthouseServiceProvider\" --tag=schema");
-        echo "  +creating config:         ";
-        run_command("cd {$project_name} && php artisan vendor:publish --provider=\"Nuwave\Lighthouse\LighthouseServiceProvider\" --tag=config");
-    }
-
 }
 echo "\n\33[1;32mLaravel 5 project '{$project_name}' successfully created!\033[0m\n";
