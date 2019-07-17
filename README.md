@@ -1,6 +1,11 @@
 # Laravel Scratch
 Creates Laravel 5 project with awesome packages
 
+## Installation perfomance
+Installation undex Linux (Debian 9, Core i5-7400, 16 GB RAM) took ~5 minutes
+
+Installation under Windows (Vagrant Homestead, Core i7-7700, 4 GB RAM) took ~8 minutes
+
 ## Use
 
 ```
