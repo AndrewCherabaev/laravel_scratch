@@ -56,7 +56,7 @@ and [Barry vd. Heuvel](https://github.com/barryvdh)
   "ignore": false 
 }
 ```
-**Important** If your "command" is bash command, i.e. `echo composer.lock >> .gitignore`, add `&&` after it: `echo composer.lock >> .gitignore &&` - it prevents falling echo text to `/dev/null`
+**Important!** If your "command" is bash command, i.e. `echo composer.lock >> .gitignore`, add `&&` after it: `echo composer.lock >> .gitignore &&` - it prevents falling echo text to `/dev/null`
 
 ## Todo
 * Add some another awesome packages
