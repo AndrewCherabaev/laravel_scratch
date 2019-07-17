@@ -1,11 +1,6 @@
 # Laravel Scratch
 Creates Laravel 5 project with awesome packages
 
-## Installation perfomance
-Installation under Linux (Debian 9, Core i5-7400, 16 GB RAM) took ~5 minutes
-
-Installation under Windows (Vagrant Homestead, Core i7-7700, 4 GB RAM) took ~8 minutes
-
 ## Use
 
 ```
@@ -67,3 +62,46 @@ and [Barry vd. Heuvel](https://github.com/barryvdh)
 * ~~Remove some flags~~
 * ~~Add `scratch.json` for easy packages list modifying~~
 * ~~Add links to packages repositories and Laravel Awesome list~~
+
+## Installation perfomance
+Installation checked for all packages (13 + laravel/framework), even they are disabled by default
+
+```
+Creating new Laravel 5 project 'test_perfomance'...
+
+Install Laravel:             Done ✓
+ + config (1/1):             Done ✓
+Install Doctrine DBAL:       Done ✓
+Install IDE Helper:          Done ✓
+ + config (1/3):             Done ✓
+ + config (2/3):             Done ✓
+ + config (3/3):             Done ✓
+Install Debug Bar:           Done ✓
+ + config (1/1):             Done ✓
+Install Extended Generators: Done ✓
+Install Activitylog:         Done ✓
+ + config (1/2):             Done ✓
+ + config (2/2):             Done ✓
+Install Eloquent Sluggable:  Done ✓
+ + config (1/1):             Done ✓
+Install Eloquent Filter:     Done ✓
+ + config (1/1):             Done ✓
+Install Eloquent Sortable:   Done ✓
+Install Laravel-AdminLTE:    Done ✓ [disabled by default]
+ + config (1/1):             Done ✓
+Install Laravel Menu:        Done ✓ [disabled by default]
+Install Breadcrumbs:         Done ✓ [disabled by default]
+ + config (1/1):             Done ✓
+Install Lighthouse:          Done ✓
+ + config (1/2):             Done ✓
+ + config (2/2):             Done ✓
+Install Laravel CORS:        Done ✓ 
+ + config (1/1):             Done ✓
+
+Laravel 5 project 'test_perfomance' successfully created in 4:51 min
+```
+
+Installation under Linux (Debian 9, Core i5-7400, 16 GB RAM) took ~5 minutes
+
+Installation under Windows (Vagrant Homestead, Core i7-7700, 4 GB RAM) took ~8 minutes
+
