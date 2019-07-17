@@ -103,6 +103,15 @@
                 "php artisan vendor:publish --provider=\"Nuwave\\Lighthouse\\LighthouseServiceProvider\" --tag=config"
             ],
             "ignore": false
+        },
+        {
+            "name": "Laravel CORS",
+            "description": "CORS Middleware for Laravel",
+            "composer": "barryvdh/laravel-cors",
+            "commands": [
+                "php artisan vendor:publish --provider=\"Barryvdh\\Cors\\ServiceProvider\""
+            ],
+            "ignore": false
         }
     ]
 }
