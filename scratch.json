@@ -70,13 +70,29 @@
             "ignore": false
         },
         {
+            "name": "Laravel-AdminLTE",
+            "description": "AdminLTE integration with Laravel",
+            "composer": "jeroennoten/laravel-adminlte",
+            "commands": [
+                "php artisan vendor:publish --provider=\"JeroenNoten\\LaravelAdminLte\\ServiceProvider\" --tag=assets"
+            ],
+            "ignore": true
+        },
+        {
+            "name": "Laravel Menu",
+            "description": "Html Menu Generator",
+            "composer": "spatie/laravel-menu",
+            "commands": [],
+            "ignore": true
+        },
+        {
             "name": "Breadcrumbs",
             "description": "Create and manage breadcrumbs",
             "composer": "davejamesmiller/laravel-breadcrumbs",
             "commands": [
                 "php artisan vendor:publish --provider=\"DaveJamesMiller\\Breadcrumbs\\BreadcrumbsServiceProvider\""
             ],
-            "ignore": false
+            "ignore": true
         },
         {
             "name": "Lighthouse",
