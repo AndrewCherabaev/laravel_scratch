@@ -79,7 +79,7 @@ if (!array_key_exists('no-laravel', $flags)) {
     echo "Install " . str_pad("Laravel:", $pad_right+2, ' ', STR_PAD_RIGHT);
     execute("composer create-project --prefer-dist laravel/laravel {$name}", $is_test);
     echo str_pad(" + config (1/1):", $pad_right+10, ' ', STR_PAD_RIGHT);
-    execute("cd {$name} && echo composer.lock >> .gitignore", $is_test);
+    execute("cd {$name} && echo composer.lock >> .gitignore &&", $is_test);
 }
 
 if (!array_key_exists('pure', $flags) && count($packages)) {
