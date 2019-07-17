@@ -29,11 +29,13 @@ Options:
   * [Eloquent Sluggable](https://github.com/cviebrock/eloquent-sluggable) - Create slugs for Eloquent models
   * [Eloquent Filter](https://github.com/Tucker-Eric/EloquentFilter) - Filter models and their Relationships
   * [Eloquent Sortable](https://github.com/spatie/eloquent-sortable) - Sortable behaviour for Eloquent models
-  * [Laravel Breadcrumbs](https://github.com/davejamesmiller/laravel-breadcrumbs) - Create and manage breadcrumbs
+  * [Laravel AdminLTE](https://github.com/jeroennoten/Laravel-AdminLTE) - AdminLTE integration with Laravel (ignored by default)
+  * [Laravel Menu](https://github.com/spatie/laravel-menu) - Html Menu Generator (ignored by default)
+  * [Laravel Breadcrumbs](https://github.com/davejamesmiller/laravel-breadcrumbs) - Create and manage breadcrumbs (ignored by default)
   * [Lighthouse](https://github.com/nuwave/lighthouse) - An up and coming GraphQL library for Laravel
 
-  Special thanks to [Awesome Laravel](https://github.com/chiraggude/awesome-laravel)
-
+  Special thanks to [Awesome Laravel](https://github.com/chiraggude/awesome-laravel), [Spatie team](https://github.com/spatie)
+and [Barry vd. Heuvel](https://github.com/barryvdh)
 ## About `scratch.json`
 
 ```js
