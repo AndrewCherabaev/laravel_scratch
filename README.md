@@ -49,8 +49,8 @@ and [Barry vd. Heuvel](https://github.com/barryvdh)
   "composer": "nuwave/lighthouse",
   //List of specific commands to be run
   "commands": [ 
-      "php artisan vendor:publish --provider=\"Nuwave\\Lighthouse\\LighthouseServiceProvider\" --tag=schema",
-      "php artisan vendor:publish --provider=\"Nuwave\\Lighthouse\\LighthouseServiceProvider\" --tag=config"
+    "php artisan vendor:publish --provider=\"Nuwave\\Lighthouse\\LighthouseServiceProvider\" --tag=schema",
+    "php artisan vendor:publish --provider=\"Nuwave\\Lighthouse\\LighthouseServiceProvider\" --tag=config"
   ],
   //Set to true if you need not to install this package
   "ignore": false 
