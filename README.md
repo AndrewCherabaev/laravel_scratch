@@ -33,6 +33,7 @@ Options:
   * [Laravel Menu](https://github.com/spatie/laravel-menu) - Html Menu Generator (ignored by default)
   * [Laravel Breadcrumbs](https://github.com/davejamesmiller/laravel-breadcrumbs) - Create and manage breadcrumbs (ignored by default)
   * [Lighthouse](https://github.com/nuwave/lighthouse) - An up and coming GraphQL library for Laravel
+  * [Laravel CORS](https://github.com/barryvdh/laravel-cors) - CORS Middleware for Laravel 5
 
   Special thanks to [Awesome Laravel](https://github.com/chiraggude/awesome-laravel), [Spatie team](https://github.com/spatie)
 and [Barry vd. Heuvel](https://github.com/barryvdh)
