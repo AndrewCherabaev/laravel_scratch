@@ -1,4 +1,7 @@
 {
+    "dist": {
+
+    },
     "packages": [
         {
             "name": "Doctrine DBAL",
