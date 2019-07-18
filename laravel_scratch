@@ -8,7 +8,7 @@ $flags = getopt('h', [
     'name:'
 ]);
 
-['packages' => $packages] = json_decode(file_get_contents('scratch.json'), 1);
+['packages' => $packages, 'dist' => $dist] = json_decode(file_get_contents('scratch.json'), 1);
 $pad_right = max(array_map('strlen', array_column($packages, 'name')));
 
 if (empty($flags) || array_key_exists('h', $flags) || array_key_exists('help', $flags)) {
@@ -68,6 +68,25 @@ function execute($command, $is_test=false)
     $is_test ? run_command('ls') : run_command($command);
 }
 
+function install($package, $pad_right, $name, $is_test, $is_laravel = false)
+{
+    echo "Install " . str_pad($package['name'] . ':', $pad_right+2, ' ', STR_PAD_RIGHT);
+    if ($is_laravel) {
+        execute("composer {$package['composer']} {$name}", $is_test);
+    } else {
+        execute("cd {$name} && composer require {$package['composer']}", $is_test);
+    }
+    if (array_key_exists('commands', $package)) {
+        foreach ($package['commands'] as $index => $config) {
+            $i = $index +1;
+            $all = count($package['commands']);
+            echo str_pad(" + config ({$i}/{$all}):", $pad_right+10, ' ', STR_PAD_RIGHT);
+            
+            execute("cd {$name} && {$config}", $is_test);
+        }
+    }
+}
+
 $name = $flags['name'];
 $is_test = array_key_exists('test', $flags);
 
@@ -76,10 +95,7 @@ $start = microtime(1);
 echo "\33[1;32mCreating new Laravel 5 project '{$name}'...\33[1;37m\n\n";
 
 if (!array_key_exists('no-laravel', $flags)) {
-    echo "Install " . str_pad("Laravel:", $pad_right+2, ' ', STR_PAD_RIGHT);
-    execute("composer create-project --prefer-dist laravel/laravel {$name}", $is_test);
-    echo str_pad(" + config (1/1):", $pad_right+10, ' ', STR_PAD_RIGHT);
-    execute("cd {$name} && echo composer.lock >> .gitignore &&", $is_test);
+    install($dist, $pad_right, $name, $is_test, true);
 }
 
 if (!array_key_exists('pure', $flags) && count($packages)) {
@@ -88,18 +104,7 @@ if (!array_key_exists('pure', $flags) && count($packages)) {
         if ($package['ignore'] ?? false) {
             continue;
         }
-        echo "Install " . str_pad($package['name'] . ':', $pad_right+2, ' ', STR_PAD_RIGHT);
-        execute("cd {$name} && composer require {$package['composer']}", $is_test);
-        if (array_key_exists('commands', $package)) {
-            $pad_left = strlen("Install " . $package['name']);
-            foreach ($package['commands'] as $index => $config) {
-                $i = $index +1;
-                $all = count($package['commands']);
-                echo str_pad(" + config ({$i}/{$all}):", $pad_right+10, ' ', STR_PAD_RIGHT);
-                
-                execute("cd {$name} && {$config}", $is_test);
-            }
-        }
+        install($package, $pad_right, $name, $is_test);
     }
 }
 

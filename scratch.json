@@ -1,6 +1,11 @@
 {
     "dist": {
-
+        "name": "Laravel Framework",
+        "description": "The PHP Framework For Web Artisans",
+        "composer": "create-project --prefer-dist laravel/laravel",
+        "commands" : [
+            "echo composer.lock >> .gitignore &&"
+        ]
     },
     "packages": [
         {
