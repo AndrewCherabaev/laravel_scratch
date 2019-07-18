@@ -8,7 +8,7 @@ $flags = getopt('h', [
     'name:'
 ]);
 
-$packages = json_decode(file_get_contents('scratch.json'), true)['packages'];
+['packages' => $packages] = json_decode(file_get_contents('scratch.json'), 1);
 $pad_right = max(array_map('strlen', array_column($packages, 'name')));
 
 if (empty($flags) || array_key_exists('h', $flags) || array_key_exists('help', $flags)) {
