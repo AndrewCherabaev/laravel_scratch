@@ -1,22 +1,15 @@
 #!/usr/bin/php
 <?php
-
-$flags = getopt('h', [
-    'pure',                     // install Laravel only
-    'no-laravel',               // install all to existing project
-    'test',
-    'name:'
-]);
-
+$flags = @count(['h' => $help, 'pure' => $pure, 'no-laravel' => $no_laravel, 'test' => $is_test, 'name' => $name] = getopt('h', ['pure','no-laravel','test','name:']));
 ['packages' => $packages, 'dist' => $dist] = json_decode(file_get_contents('scratch.json'), 1);
 $pad_right = max(array_map('strlen', array_column($packages, 'name')));
 
-if (empty($flags) || array_key_exists('h', $flags) || array_key_exists('help', $flags)) {
+if (!$flags || !is_null($help)) {
     echo "\33[1;37m
     Laravel 5 scratch installer v1.0
 
     \33[1;32mOptions:\33[1;37m
-           -h, --help      Show this help message
+           -h              Show this help message
            --name=project  \33[1;33mRequired\33[1;37m Name of new project
         
            --pure          Do not install additional packages
@@ -25,20 +18,14 @@ if (empty($flags) || array_key_exists('h', $flags) || array_key_exists('help', $
     \33[1;32mPackages to be installed:\33[1;37m\n";
     foreach ($packages as $package) {
         $name = str_pad($package['name'], $pad_right+2, ' ', STR_PAD_RIGHT);
-        if ($package['ignore'] ?? false) {
-            echo "\33[0;37m [ignored] \33[1;30m";
-        } else {
-            echo "           ";
-        }
+        echo ($package['ignore'] ?? false) ? "\33[0;37m [ignored] \33[1;30m" : "           ";
         echo "{$name} {$package['description']}\33[1;37m\n";
     }
-    echo "\033[0m\n";
-    exit;
+    echo "\033[0m\n";return;
 }
 
-if (!array_key_exists('name', $flags)) {
-    echo "\33[1;33mNo project name specified!\033[0m\n";
-    exit;
+if (is_null($name)) {
+    echo "\33[1;33mNo project name specified!\033[0m\n";return;
 }
 
 function status($pid)
@@ -65,7 +52,7 @@ function run_command($command)
 
 function execute($command, $is_test=false)
 {
-    $is_test ? run_command('ls') : run_command($command);
+    $is_test ?run_command(''): run_command($command);
 }
 
 function install($package, $pad_right, $name, $is_test, $is_laravel = false)
@@ -87,29 +74,17 @@ function install($package, $pad_right, $name, $is_test, $is_laravel = false)
     }
 }
 
-$name = $flags['name'];
-$is_test = array_key_exists('test', $flags);
-
-$start = microtime(1);
+$time = microtime(1);
+$is_test = !is_null($is_test);
 
 echo "\33[1;32mCreating new Laravel 5 project '{$name}'...\33[1;37m\n\n";
+(is_null($no_laravel)) && install($dist, $pad_right, $name, $is_test, true);
+(is_null($pure) && count($packages)) && array_walk($packages, function($package) use ($pad_right, $name, $is_test){
+    if ($package['ignore'] ?? false) return;
+    install($package, $pad_right, $name, $is_test);
+});
 
-if (!array_key_exists('no-laravel', $flags)) {
-    install($dist, $pad_right, $name, $is_test, true);
-}
+$time -= microtime(1);
+$timestamp = sprintf('%02d:%02d', -$time/60, -$time%60);
 
-if (!array_key_exists('pure', $flags) && count($packages)) {
-
-    foreach ($packages as $package) {
-        if ($package['ignore'] ?? false) {
-            continue;
-        }
-        install($package, $pad_right, $name, $is_test);
-    }
-}
-
-$time = microtime(1) - $start;
-$min = number_format($time/60, 0);
-$sec = number_format($time%60, 0);
-
-echo "\n\33[1;32mLaravel 5 project '{$name}' successfully created\33[1;37m in {$min}:{$sec} min \033[0m\n";
+echo "\n\33[1;32mLaravel 5 project '{$name}' successfully created\33[1;37m in {$timestamp} min \033[0m\n";
