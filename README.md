@@ -86,7 +86,6 @@ Install Eloquent Sluggable:  Done ✓
  + config (1/1):             Done ✓
 Install Eloquent Filter:     Done ✓
  + config (1/1):             Done ✓
-Install Eloquent Sortable:   Done ✓
 Install Laravel-AdminLTE:    Done ✓ [disabled by default]
  + config (1/1):             Done ✓
 Install Laravel Menu:        Done ✓ [disabled by default]
