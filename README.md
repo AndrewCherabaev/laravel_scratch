@@ -31,8 +31,8 @@ Options:
   * [Laravel AdminLTE](https://github.com/jeroennoten/Laravel-AdminLTE) - AdminLTE integration with Laravel
   * [Laravel Menu](https://github.com/spatie/laravel-menu) - Html Menu Generator
   * [Laravel Breadcrumbs](https://github.com/davejamesmiller/laravel-breadcrumbs) - Create and manage breadcrumbs
-  * [Lighthouse](https://github.com/nuwave/lighthouse) - An up and coming GraphQL library for Laravel
-  * [Laravel CORS](https://github.com/barryvdh/laravel-cors) - CORS Middleware for Laravel 5
+  * [Lighthouse](https://github.com/nuwave/lighthouse) - An up and coming GraphQL library for Laravel  (disabled by default)
+  * [Laravel CORS](https://github.com/barryvdh/laravel-cors) - CORS Middleware for Laravel 5  (disabled by default)
 
   Special thanks to [Awesome Laravel](https://github.com/chiraggude/awesome-laravel), [Spatie team](https://github.com/spatie)
 and [Barry vd. Heuvel](https://github.com/barryvdh)
