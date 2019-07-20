@@ -79,22 +79,22 @@ Install IDE Helper:          Done ✓
 Install Debug Bar:           Done ✓
  + config (1/1):             Done ✓
 Install Extended Generators: Done ✓
-Install Activitylog:         Done ✓
+Install Activitylog:         Done ✓ [disabled by default]
  + config (1/2):             Done ✓
  + config (2/2):             Done ✓
 Install Eloquent Sluggable:  Done ✓
  + config (1/1):             Done ✓
 Install Eloquent Filter:     Done ✓
  + config (1/1):             Done ✓
-Install Laravel-AdminLTE:    Done ✓ [disabled by default]
+Install Laravel-AdminLTE:    Done ✓
  + config (1/1):             Done ✓
-Install Laravel Menu:        Done ✓ [disabled by default]
-Install Breadcrumbs:         Done ✓ [disabled by default]
+Install Laravel Menu:        Done ✓
+Install Breadcrumbs:         Done ✓
  + config (1/1):             Done ✓
-Install Lighthouse:          Done ✓
+Install Lighthouse:          Done ✓ [disabled by default]
  + config (1/2):             Done ✓
  + config (2/2):             Done ✓
-Install Laravel CORS:        Done ✓ 
+Install Laravel CORS:        Done ✓ [disabled by default] 
  + config (1/1):             Done ✓
 
 Laravel 5 project 'test_perfomance' successfully created in 4:51 min
