@@ -25,13 +25,12 @@ Options:
   * [IDE Helper](https://github.com/barryvdh/laravel-ide-helper) - Generates a helper file for IDE auto-completion
   * [Debug Bar](https://github.com/barryvdh/laravel-debugbar) - Integrates PHP Debug Bar with Laravel
   * [Laravel 5 Extended Generators](https://github.com/laracasts/Laravel-5-Generators-Extended) - Extends built-in file generators
-  * [Laravel Activitylog](https://github.com/spatie/laravel-activitylog) - Log activity inside your Laravel app
+  * [Laravel Activitylog](https://github.com/spatie/laravel-activitylog) - Log activity inside your Laravel app (disabled by default)
   * [Eloquent Sluggable](https://github.com/cviebrock/eloquent-sluggable) - Create slugs for Eloquent models
   * [Eloquent Filter](https://github.com/Tucker-Eric/EloquentFilter) - Filter models and their Relationships
-  * [Eloquent Sortable](https://github.com/spatie/eloquent-sortable) - Sortable behaviour for Eloquent models
-  * [Laravel AdminLTE](https://github.com/jeroennoten/Laravel-AdminLTE) - AdminLTE integration with Laravel (disabled by default)
-  * [Laravel Menu](https://github.com/spatie/laravel-menu) - Html Menu Generator (disabled by default)
-  * [Laravel Breadcrumbs](https://github.com/davejamesmiller/laravel-breadcrumbs) - Create and manage breadcrumbs (disabled by default)
+  * [Laravel AdminLTE](https://github.com/jeroennoten/Laravel-AdminLTE) - AdminLTE integration with Laravel
+  * [Laravel Menu](https://github.com/spatie/laravel-menu) - Html Menu Generator
+  * [Laravel Breadcrumbs](https://github.com/davejamesmiller/laravel-breadcrumbs) - Create and manage breadcrumbs
   * [Lighthouse](https://github.com/nuwave/lighthouse) - An up and coming GraphQL library for Laravel
   * [Laravel CORS](https://github.com/barryvdh/laravel-cors) - CORS Middleware for Laravel 5
 
